@@ -13,22 +13,15 @@ app.get('/', async (c) => {
   return c.json(health.body);
 });
 app.get('/search', async (c) => {
-  const category = c.req.query('q')
   const result = await client.search({
     index: 'opensearch_dashboards_sample_data_ecommerce',
     body: {
       query: {
-        match: {
-          category: {
-            query: 'M',
-            minimum_should_match: '1%'
-          }
-          
+        term: {
+          currency: 'EUR',
         },
-        
-
-      }
-    }
+      },
+    },
   });
   return c.json(result);
 });
